@@ -2,7 +2,7 @@ version: 2.1
 executors:
   docker-publisher:
     environment:
-      IMAGE_NAME: jarzamendia/alpine-3.10
+      IMAGE_NAME: jarzamendia/alpine
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
