@@ -21,3 +21,14 @@ RUN apk add --no-cache ca-certificates libressl wget && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
     apk del glibc-i18n && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
+
+ARG BUILD_DATE
+
+LABEL org.label-schema.version="1"
+LABEL org.label-schema.schema-version="1.0"
+LABEL org.label-schema.name="Alpine"
+LABEL org.label-schema.vendor="Alpine"
+LABEL org.label-schema.description="Imagem alpine base"
+LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.url="https://alpinelinux.org/"
+LABEL org.label-schema.vcs-url="https://github.com/Jarzamendia/alpine"
