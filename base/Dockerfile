@@ -1,33 +1,23 @@
-FROM alpine:3.9
+FROM alpine:3.10
 
-RUN ALPINE_GLIBC_PACKAGE_VERSION="2.29-r0" && \
-    ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \  
-    ALPINE_GLIBC_BASE_PACKAGE_FILENAME="glibc-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
-    ALPINE_GLIBC_BIN_PACKAGE_FILENAME="glibc-bin-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
-    ALPINE_GLIBC_I18N_PACKAGE_FILENAME="glibc-i18n-$ALPINE_GLIBC_PACKAGE_VERSION.apk" && \
-    LANG=pt_BR.UTF-8 && \
-    apk add --no-cache ca-certificates libressl && \
-    apk add --no-cache --virtual=.build-dependencies libstdc++ wget bash openrc && \
-    wget \
-        "https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub" \
-        -O "/etc/apk/keys/sgerrand.rsa.pub" && \
-    wget \
-        "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BASE_URL/$ALPINE_GLIBC_PACKAGE_VERSION/$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" && \
+ENV LANG=pt_BR.UTF-8
+
+RUN apk add --no-cache ca-certificates libressl wget && \
+    wget "https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub" -O "/etc/apk/keys/sgerrand.rsa.pub" && \
+    wget "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-2.30-r0.apk" \
+         "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-bin-2.30-r0.apk" \
+         "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.30-r0/glibc-i18n-2.30-r0.apk" && \
     apk add --no-cache \
-        "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" && \
-    rm "/etc/apk/keys/sgerrand.rsa.pub" && \
+        "glibc-2.30-r0.apk" \
+        "glibc-bin-2.30-r0.apk" \
+        "glibc-i18n-2.30-r0.apk" && \
+    rm "/etc/apk/keys/sgerrand.rsa.pub" \
+       "glibc-2.30-r0.apk" \
+       "glibc-bin-2.30-r0.apk" \
+       "glibc-i18n-2.30-r0.apk" \
+       "/root/.wget-hsts" && \
     ( /usr/glibc-compat/bin/localedef -i pt_BR -f UTF-8 pt_BR.UTF-8 || true ) && \
     echo "export LANG=pt_BR.UTF-8" > /etc/profile.d/locale.sh && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
     apk del glibc-i18n && \
-    rm "/root/.wget-hsts" && \
-    apk del .build-dependencies && \
-    rm \
-        "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
-        "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME" && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
