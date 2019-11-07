@@ -1,6 +1,7 @@
 # Docker Alpine
 
 [![CircleCI](https://circleci.com/gh/Jarzamendia/alpine.svg?style=svg)](https://circleci.com/gh/Jarzamendia/alpine)
+[![](https://images.microbadger.com/badges/image/jarzamendia/alpine.svg)](https://microbadger.com/images/jarzamendia/alpine "Get your own image badge on microbadger.com")
 
 Docker Hub: https://hub.docker.com/r/jarzamendia/alpine
 
