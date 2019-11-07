@@ -18,8 +18,9 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            BUILD_DATE = $(date -u +"%Y-%m-%dT%H:%M:%SZ") | 
-            docker build --build-arg BUILD_DATE=$BUILD_DATE -t $IMAGE_NAME:latest -f Dockerfile .
+            export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") | 
+            docker build --build-arg BUILD_DATE=$BUILD_DATE -t $IMAGE_NAME:latest -f Dockerfile . | 
+            echo "ok"
       - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
