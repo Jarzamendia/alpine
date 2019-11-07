@@ -4,7 +4,7 @@ executors:
 
   docker-publisher:
     environment:
-      IMAGE_NAME: jarzamendia/alpine-3.9
+      IMAGE_NAME: jarzamendia/alpine-3.10
     docker:
       - image: circleci/buildpack-deps:stretch
 
