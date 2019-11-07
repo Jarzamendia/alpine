@@ -1,11 +1,15 @@
 version: 2.1
+
 executors:
+
   docker-publisher:
     environment:
-      IMAGE_NAME: jarzamendia/alpine
+      IMAGE_NAME: jarzamendia/alpine-3.9
     docker:
       - image: circleci/buildpack-deps:stretch
+
 jobs:
+
   build:
     executor: docker-publisher
     steps:
@@ -22,6 +26,7 @@ jobs:
           root: .
           paths:
             - ./image.tar
+
   publish-latest:
     executor: docker-publisher
     steps:
@@ -39,6 +44,7 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
+
   publish-tag:
     executor: docker-publisher
     steps:
@@ -56,8 +62,11 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
+
 workflows:
+
   version: 2
+
   build-master:
     jobs:
       - build:
@@ -70,6 +79,7 @@ workflows:
           filters:
             branches:
               only: master
+
   build-tags:
     jobs:
       - build:
