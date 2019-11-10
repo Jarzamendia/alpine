@@ -5,7 +5,6 @@
 
 Docker Hub: https://hub.docker.com/r/jarzamendia/alpine
 
-Imagem com os seguintes pacotes instalados: ca-certificates libressl wget glibc
-Ela foi alterada para o locale pt_BR.UTF-8
+Imagem do Alpine base com [GNU C Library](https://github.com/sgerrand/alpine-pkg-glibc) e em pt_BR.UTF-8.
 
-Esta imagem pode ser utilizada como base de diversas outras! 
+Esta imagem pode ser utilizada como base de diversas outras!
