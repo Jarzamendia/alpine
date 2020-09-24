@@ -4,7 +4,7 @@ executors:
 
   docker-publisher:
     environment:
-      IMAGE_NAME: jarzamendia/alpine-3.10
+      IMAGE_NAME: jarzamendia/alpine-3.11
     docker:
       - image: circleci/buildpack-deps:stretch
 
@@ -19,7 +19,7 @@ jobs:
           name: Build Docker image
           command: |
             export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") | 
-            docker build --build-arg BUILD_DATE=$BUILD_DATE -t $IMAGE_NAME:latest -f 3.10/Dockerfile .
+            docker build --build-arg BUILD_DATE=$BUILD_DATE -t $IMAGE_NAME:latest -f 3.11/Dockerfile .
       - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
